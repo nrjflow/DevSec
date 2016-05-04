@@ -6,6 +6,9 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 
+//Since you're gonna be compiling this on the /tmp folder, you should create a link to the flag file in the /tmp folder
+// ln /home/input/flag /tmp/subfolder/flag
+
 void main(){
 	char *args[101];
 	int i;
@@ -33,7 +36,7 @@ void main(){
 	#define PARENT_WRITE2 fd2[1]
 	pid_t child;
 	if((child=fork())<0){
-		printf("Fucking bastard\n");
+		printf("F#cking bastard\n");
 	}else if(child==0){
 
 		
@@ -43,29 +46,29 @@ void main(){
 		dup2(CHILD_READ2,2);
 		close(CHILD_READ0);
 		close(CHILD_READ2);
-		execve("./input",args,env);
+		execve("/home/input/input",args,env);
 		
 	}else{
 		close(CHILD_READ0);
 		close(CHILD_READ2);
 		write(PARENT_WRITE0,"\x00\x0a\x00\xff",4);
 		write(PARENT_WRITE2,"\x00\x0a\x02\xff",4);
-	    int sockfd, portno, n;
-	    struct sockaddr_in serv_addr;
-	    struct hostent *server;
-	    portno = atoi(args['C']);
-	    sockfd = socket(AF_INET, SOCK_STREAM, 0); 
-	    server = gethostbyname("127.0.0.1");
-	    bzero((char *) &serv_addr, sizeof(serv_addr));
-	    serv_addr.sin_family = AF_INET;
-	    bcopy((char *)server->h_addr, 
+		int sockfd, portno, n;
+		struct sockaddr_in serv_addr;
+		struct hostent *server;
+		portno = atoi(args['C']);
+		sockfd = socket(AF_INET, SOCK_STREAM, 0); 
+		server = gethostbyname("127.0.0.1");
+		bzero((char *) &serv_addr, sizeof(serv_addr));
+		serv_addr.sin_family = AF_INET;
+		bcopy((char *)server->h_addr, 
 		 (char *)&serv_addr.sin_addr.s_addr,
 		 server->h_length);
-	    serv_addr.sin_port = htons(portno);
-	    sleep(5);
-	    connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr));
-	    write(sockfd,"\xde\xad\xbe\xef",4);
-	    close(sockfd);
+		serv_addr.sin_port = htons(portno);
+		sleep(5);
+		connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr));
+		write(sockfd,"\xde\xad\xbe\xef",4);
+		close(sockfd);
 
 	}
 }
