@@ -14,7 +14,7 @@ void main(){
 	}
 	args['A']="\x00";
 	args['B']="\x20\x0a\x0d";
-	args['C']=5555;
+	args['C']="5555";
 	args[100]=NULL;
 	
 	char* env[2]={"\xde\xad\xbe\xef=\xca\xfe\xba\xbe",NULL};
@@ -63,8 +63,7 @@ void main(){
 		 server->h_length);
 	    serv_addr.sin_port = htons(portno);
 	    sleep(5);
-	    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
-		error("ERROR connecting");
+	    connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr));
 	    write(sockfd,"\xde\xad\xbe\xef",4);
 	    close(sockfd);
 
