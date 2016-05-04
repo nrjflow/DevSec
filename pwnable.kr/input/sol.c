@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h> 
 
 void main(){
 	char *args[101];
@@ -11,6 +14,7 @@ void main(){
 	}
 	args['A']="\x00";
 	args['B']="\x20\x0a\x0d";
+	args['C']=5555;
 	args[100]=NULL;
 	
 	char* env[2]={"\xde\xad\xbe\xef=\xca\xfe\xba\xbe",NULL};
@@ -46,6 +50,23 @@ void main(){
 		close(CHILD_READ2);
 		write(PARENT_WRITE0,"\x00\x0a\x00\xff",4);
 		write(PARENT_WRITE2,"\x00\x0a\x02\xff",4);
+	    int sockfd, portno, n;
+	    struct sockaddr_in serv_addr;
+	    struct hostent *server;
+	    portno = atoi(args['C']);
+	    sockfd = socket(AF_INET, SOCK_STREAM, 0); 
+	    server = gethostbyname("127.0.0.1");
+	    bzero((char *) &serv_addr, sizeof(serv_addr));
+	    serv_addr.sin_family = AF_INET;
+	    bcopy((char *)server->h_addr, 
+		 (char *)&serv_addr.sin_addr.s_addr,
+		 server->h_length);
+	    serv_addr.sin_port = htons(portno);
+	    sleep(5);
+	    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+		error("ERROR connecting");
+	    write(sockfd,"\xde\xad\xbe\xef",4);
+	    close(sockfd);
 
 	}
 }
