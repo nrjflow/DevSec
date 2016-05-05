@@ -1,0 +1,1 @@
+cmd_/root/DevSec/DevSec/greenmonster/fw.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-4.4.0-kali1-common/scripts/module-common.lds --build-id  -o /root/DevSec/DevSec/greenmonster/fw.ko /root/DevSec/DevSec/greenmonster/fw.o /root/DevSec/DevSec/greenmonster/fw.mod.o
