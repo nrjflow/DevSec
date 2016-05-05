@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 
 	printf("do not bruteforce...\n");
 	sleep(time(0)%20);
-
+	printf("%d\n",time(0)%20);
 	char pw_buf[PW_LEN+1];
 	int len;
 	if(!(len=read(fd,pw_buf,PW_LEN) > 0)){
