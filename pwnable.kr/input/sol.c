@@ -29,6 +29,7 @@ void main(){
 	
 	FILE* fp = fopen("\x0a", "ab+");
 	fwrite("\x00\x00\x00\x00", 4, 1, fp);
+	fclose(fp);
 
 	#define CHILD_READ0 fd0[0]
 	#define PARENT_WRITE0 fd0[1]
