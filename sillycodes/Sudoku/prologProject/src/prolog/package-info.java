@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Soufiane
- *
- */
-package prolog;
